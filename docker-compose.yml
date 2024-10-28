@@ -1,0 +1,21 @@
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    user: root
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock # Necessário para que o Jenkins possa usar o Docker dentro do contêiner
+
+  selenium:
+    image: selenium/standalone-chrome:latest
+    container_name: selenium
+    shm_size: 2g # Aumenta o compartilhamento de memória para melhor estabilidade do Chrome
+    ports:
+      - "4444:4444" # Porta padrão do Selenium WebDriver
+
+volumes:
+  jenkins_home:
